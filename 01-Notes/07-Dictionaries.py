@@ -71,6 +71,7 @@
     dict.has_key(key)                   # used to inquire if a given key is available in a dictionary (otherwise returns false)
     dict.setdefault(key)                # similar to get(), but will set dict[key]=default if key is not already in dictionary
     dict.update(dict2)                  # adds dict2's key-value pairs to an existing dictionary
+    dict.iteritems()                    # Returns an iterator over the dictionary's key-value pairs
 
 
 # Nested Dictionaries are also allowed
@@ -135,4 +136,4 @@
     dishes = ["pizza", "sauerkraut", "paella", "hamburger"]
     country_specialities = zip(countries,dishes)
     print country_specialities
-    # RESULT: [('Italy', 'pizza'), ('Germany', 'sauerkraut'), ('Spain', 'paella'), ('USA', 'hamburger')]v
+    # RESULT: [('Italy', 'pizza'), ('Germany', 'sauerkraut'), ('Spain', 'paella'), ('USA', 'hamburger')]
