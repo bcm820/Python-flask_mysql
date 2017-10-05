@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Dojo Survey</title>
+    </head>
+    <body>
+    <h1>Dojo Survey</h1>
+    <form action="/result" method="POST">
+        <table>
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="name"></td>
+            </tr>
+            <tr>
+                <td>Favorite Language</td>
+                <td>
+                <select name="language">
+                    <option value="javascript">Javascript</option>
+                    <option value="python">Python</option>
+                    <option value="java">Java</option>
+                </select>
+                </td>
+            </tr>
+            <tr><td colspan="2">
+                Comment:<br>
+                <textarea name="comment" rows="4" cols="40"></textarea>
+            </td></tr>
+            <tr><td colspan="2">
+                <input type="submit" value="Submit">
+            </td></tr>
+        </table>
+        </form>
+    </body>
+</html>
