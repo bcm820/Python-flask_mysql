@@ -1,7 +1,7 @@
 def findCharacters (word_list, char):
     newlist = []
     for i in word_list:
-        if i.find(char) != -1:
+        if i.find(char) > -1:
             newlist.append(i)
     print newlist
 

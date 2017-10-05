@@ -13,6 +13,7 @@ random.randint(a,b) # returns a random int between range a-b (incl.)
 ### Built-In ###
 
 round(float)        # rounds float up or down
+{:,}                # uses comma for thousands
 
 
 ### STRING METHODS ###
