@@ -38,10 +38,10 @@
 
     # Also, here is a list of useful validation tools:
 
-            str.isalpha()       # Return true if all characters are alphabetic and at least one char
-            str.isalnum()       # Return true if all characters are alphanumeric and at least one char
-            str.isdigit()       # Return true if all characters are digits and and at least one char
-            str.istitle()       # Return true if string is titlecased and at least one char
+            str.isalpha()    # Return true if all characters are alphabetic and at least one char
+            str.isalnum()    # Return true if all characters are alphanumeric and at least one char
+            str.isdigit()    # Return true if all characters are digits and and at least one char
+            str.istitle()    # Return true if string is titlecased and at least one char
 
     # Lastly, here's how to change a string to time using the given format:
 
@@ -113,14 +113,9 @@
         # Optionally, you can pass place separate categories in different locations on your HTML page:
         {% with errors = get_flashed_messages(category_filter=["error"]) %}
         {% if errors %}
-        <div class="alert-message block-message error">
-        <a class="close" href="#">×</a>
-        <ul>
             {%- for msg in errors %}
-            <li>{{ msg }}</li>
+            <p>{{ msg }}</p>
             {% endfor -%}
-        </ul>
-        </div>
         {% endif %}
         {% endwith %}
 

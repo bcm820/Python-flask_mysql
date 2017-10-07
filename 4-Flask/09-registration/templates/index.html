@@ -1,0 +1,79 @@
+<html>
+    <head>
+        <title>Registration Form</title>
+        <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}>
+        <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+    </head>
+    <body>
+        <form action=/process/ method=post>
+        <div id=container>
+            <div id=title>Registration Form</div>
+            <div id=first>
+                First Name:<br>
+                <input type=text name=first value="{{ session['first']}}">
+                {% with fields = get_flashed_messages(category_filter=["first"]) %}
+                {% if fields %}
+                    {%- for msg in fields %}
+                    <p>{{ msg }}</p>
+                    {% endfor -%}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div id=last>
+                Last Name:<br>
+                <input type=text name=last value="{{ session['last']}}">
+                {% with fields = get_flashed_messages(category_filter=["last"]) %}
+                {% if fields %}
+                    {%- for msg in fields %}
+                    <p>{{ msg }}</p>
+                    {% endfor -%}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div id=email>
+                Email:<br>
+                <input type=text name=email value="{{ session['email']}}">
+                {% with fields = get_flashed_messages(category_filter=["email"]) %}
+                {% if fields %}
+                    {%- for msg in fields %}
+                    <p>{{ msg }}</p>
+                    {% endfor -%}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div id=password>
+                Password:<br>
+                <input type="password" name="password" value="{{ session['password']}}">
+                {% with fields = get_flashed_messages(category_filter=["password"]) %}
+                {% if fields %}
+                    {%- for msg in fields %}
+                    <p>{{ msg }}</p>
+                    {% endfor -%}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div id=password>
+                Confirm Password:<br>
+                <input type="password" name="confirm" value="{{ session['confirm']}}">
+                {% with fields = get_flashed_messages(category_filter=["confirm"]) %}
+                {% if fields %}
+                    {%- for msg in fields %}
+                    <p>{{ msg }}</p>
+                    {% endfor -%}
+                {% endif %}
+                {% endwith %}
+            </div>
+            <div id=submit>
+                <input type="submit" value="Submit">
+                {% with fields = get_flashed_messages(category_filter=["submit"]) %}
+                {% if fields %}
+                    {%- for msg in fields %}
+                    <p class=submit>{{ msg }}</p>
+                    {% endfor -%}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+        </form>
+    </body>
+</html>
