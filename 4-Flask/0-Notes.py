@@ -1,5 +1,183 @@
 
 
+#########################
+# FORM VALIDATION PT. 2 #
+
+    # How do you check whether an email address is valid? You use regular expression (regex). A regex is a sequence of characters that defines a search pattern. Email follows a strict pattern with some characters followed by @ symbol, more characters, a ., and then more characters. Let's look at how to implement regex with this pattern.
+    
+    # First, we need to import the 're' module that will let us perform regex operations:
+
+        import re
+
+    # And we need to create a regex object that we can run operations on:
+
+        EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+    
+    # Next, here's our basic validation conditional, along with where we want to include the regex:
+
+        def submit():
+            if len(request.form['email']) < 1:
+                flash("Email cannot be blank!")
+            # else if email doesn't match regex, display "invalid email address" message
+            else:
+                flash("Success!")
+            return redirect('/')
+
+    # Here's how it should look at the end:
+
+        @app.route('/process', methods=['POST'])
+        def submit():
+            if len(request.form['email']) < 1:
+                flash("Email cannot be blank!")
+            # Here we use the EMAIL_REGEX object we created and running the .match() method that will return NONE if no match can be found. If the argument matches the regex, a match object instance is returned.
+            elif not EMAIL_REGEX.match(request.form['email']):
+                flash("Invalid Email Address!")
+            else:
+                flash("Success!")
+            return redirect('/')
+
+    # Also, here is a list of useful validation tools:
+
+            str.isalpha()       # Return true if all characters are alphabetic and at least one char
+            str.isalnum()       # Return true if all characters are alphanumeric and at least one char
+            str.isdigit()       # Return true if all characters are digits and and at least one char
+            str.istitle()       # Return true if string is titlecased and at least one char
+
+    # Lastly, here's how to change a string to time using the given format:
+
+            time.strptime(string, format)
+
+
+#########################
+
+#########################
+# FORM VALIDATION PT. 1 #
+
+    # Form validation is key for any back-end developer. Here are important concepts:
+        # Logic: What data do we want to validate?
+        # Checking if the data is present
+        # Making sure the data is in the correct format
+        # Sending the user to the correct destination whether their data is valid or not
+        # Alerting the user of their errors (if they exist)
+
+    # IF/ELSE: If we have clean data, then we can proceed. But if the user inputs unclean data (e.g. injections), then we can't proceed and need to do something else. We need to use IF statements with functions that return True or False depending on if the data given is valid.
+
+    # To check if a name field is empty, use len():
+
+        @app.route('/process', methods=['POST'])
+        def process():
+        if len(request.form['name']) < 1:
+            # display validation errors
+        else:
+            # display success message
+
+    # To display validation errors, use flash messages that only last for one cycle:
+
+        from flask import flash
+
+        def process():
+            if len(request.form['name']) < 1:
+                flash("Name cannot be empty!")
+            else:
+                flash("Success, {}!".format(request.form['name']))
+            return redirect('/')
+                
+    # Note- You must include a redirect to the page to view the flash message
+
+    # You can also use a function called 'get_flashed_messages()' get all flash messages as a list.This function is actually run on your HTML template, but using Flask's Python-like code:
+
+        {% with messages = get_flashed_messages() %}    # declare a var to use within a specific scope
+          {% if messages %}                             # check if there are messages
+            {% for message in messages %}               # loop through all messages
+              <p>{{message}}</p>                        # prints messages one by one in a paragraph tag
+            {% endfor %}
+          {% endif %}
+        {% endwith %}    
+
+    # You can also provide categories when flashing a message. Alternative categories can be used to give the user better feedback. Note the following in the server file and on the HTML page:
+
+        # The first line is the string, the second is the category
+        flash(u'Invalid password provided', 'error')
+        
+        # You can specify a different style class based on different categories
+        {% with messages = get_flashed_messages(with_categories=true) %} # specify with categories
+        {% if messages %}
+            <ul class=flashes>
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+        {% endwith %}
+
+        # Optionally, you can pass place separate categories in different locations on your HTML page:
+        {% with errors = get_flashed_messages(category_filter=["error"]) %}
+        {% if errors %}
+        <div class="alert-message block-message error">
+        <a class="close" href="#">×</a>
+        <ul>
+            {%- for msg in errors %}
+            <li>{{ msg }}</li>
+            {% endfor -%}
+        </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
+
+#########################
+
+############
+# SESSIONS #
+
+    # Data can be passed between routes. But this is a challenge for HTTP req/res cycle, which treats each cycle instance independently. How do developers enable data to persist from one cycle to the next in order to know who is logged in, what links a user has clicked, etc.?
+
+    # Flask uses cookies, securely hashed session data, stored as packet data on a client's computer. Doing this involves performance and security compromises, so we shouldn't use it for handling sensitive data. But it will work for persisting general data.
+
+    # Add 'session' to your list of imports on the top of your server file:
+
+        from flask import Flask, render_template, request, redirect, session
+
+    # Next, under the creation of your 'app' object, initialize a secret key:
+
+        app = Flask(__name__)
+        app.secret_key = 'Use_a_secret_phrase_here'
+
+    # Then, in your handler function for the route using the POST method, add:
+
+        session['name_of_input'] = request.form['name_of_input']
+        # This variable stores input data as persistent session data
+
+        return redirect('/result')
+        # Redirect to another route where you will render a page with session data!
+
+    # In the handler function for the route where you will show the results:
+
+        return render_template('page.html', name_of_input=session['name_of_input'])
+        # Add all your session data fields here in your render template
+        # To include in the template, add as {{name of input}}
+
+    # OR, instead of passing the session data in using arguments, you can:
+
+        <p>{{session['name_of_input']}}</p>
+        # Simply add the session data straight into your HTML template!
+
+    # In addition to user inputs, you can also code hidden input fields into your HTML pages that can be used to transfer session metadata to your server and into other pages:
+
+        <input type='hidden' name='action' value='register'>
+        <input type='hidden' name='action' value='login'>
+        # You can name these input types whatever you want
+
+        # Having hidden inputs can be used to trigger server-side events in your code:
+
+            if request.form['action'] == 'register':
+                # "do registration process"
+            elif request.form['action'] == 'login':
+                # "do login process"
+
+        # But note that these 'hidden' form inputs are viewable in the page's source! So be very careful in choosing what data is stored as values and what input your server-side code responds to.
+
+############
+
 ################
 # STATIC FILES #
 

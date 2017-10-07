@@ -1,0 +1,53 @@
+*{
+/*     outline: .1px solid red; */
+    }
+
+body{
+    font-family: Helvetica, sans-serif;
+    font-size: 9pt; 
+    color: black;
+    background-color: lightslategray
+}
+
+#container{
+    background-color: darkgrey;
+    border: 2px solid black;
+    width: 500px; margin: 100px auto;
+    display: grid;
+        grid-template-rows: 80px 80px 80px 80px 80px 80px;
+        grid-template-columns: 50% 50%;
+        grid-template-areas:
+            "l_first first"
+            "l_last last"
+            "l_email email"
+            "l_password password"
+            "l_confirm confirm"
+            "submit submit";
+}
+
+#registration{
+    width: 100%;
+    display: block;
+}
+
+
+#bottom{ grid-area: bottom; padding: 15px }
+
+p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+input{
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 30px;
+}
+
+textarea{
+    width: 100%;
+    height: 80%;
+    padding: 10px;
+    font-size: 12px;
+    resize: none;
+}

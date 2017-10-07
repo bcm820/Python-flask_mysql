@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>Counter</title>
+        <style>
+            #container{
+                margin: 200px auto;
+                width: 200px;
+            }
+            h1{
+                text-align: center;
+            }
+            h3{
+                text-align: center;
+                margin-bottom: 15px;
+            }
+            button{
+                margin-left: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id=container>
+    <h1>{{session['counter']}}</h1>
+    <h3>Counter</h3>
+    <p>
+    <form action='/2' method=POST><button name=counter>+2</button></form>
+    <form action='/reset' method=POST><button name=counter>Reset</button></form>
+    </p>
+        </div>
+    </body>
+</html>

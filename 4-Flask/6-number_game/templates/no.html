@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>The Great Number Game</title>
+        <style>
+            #container{
+                margin: 200px auto;
+                width: 200px;
+            }
+            h1{
+                text-align: center;
+            }
+            p{
+                text-align: center;
+            }
+            input{
+                margin-left: 90px;
+            }
+            button{
+                margin-left: 90px;
+            }
+            #result{
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div id=container>
+            <h1>Welcome to the Great Number Game!</h1>
+            <p>I am thinking of a number between 1 and 100</p>
+            <p>Take a guess!</p>
+            <div id=result>
+                <h1>{{answer}}</h1>
+            </div>
+            <p>
+                <form action='/guess/' method=post>
+                    <input type=text name=ask>
+                    <button name=submit>Submit</button>
+                </form>
+            </p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+*{
+/*     outline: .1px solid red; */
+    }
+
+body{
+    font-family: Helvetica, sans-serif;
+    font-size: 9pt; 
+    color: black;
+    background-color: lightslategray
+}
+
+#container{
+    background-color: darkgrey;
+    border: 2px solid black;
+    width: 600px; margin: 100px auto;
+    display: grid;
+        grid-template-rows: 30px 100px 200px;
+        grid-template-areas:
+            "top"
+            "middle"
+            "bottom";
+}
+
+#top{ grid-area: top; padding: 15px }
+#bottom{ grid-area: bottom; padding: 15px }
+.box{ padding: 5px }
+
+#middle{ grid-area: middle;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+}
+
+p{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+h2{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 16px;
+}
+
+input{
+    border: 1px solid black;
+    border-radius: 5px;
+    height: 30px;
+}
+
+textarea{
+    width: 100%;
+    height: 80%;
+    padding: 10px;
+    font-size: 12px;
+    resize: none;
+}
