@@ -1,0 +1,91 @@
+
+Key: Using SQL, we can distribute our data across several different tables and have them reference one another in matching records for the job at hand. This means we don't have repeat our data, allowing efficient use of storage space.
+
+Database Relationships
+
+    One to One
+        
+        A record (with a unique ID) referencing one item of matching data in another table via a 'foreign key' that points to the matching data.
+        
+        e.g. One record per customer pointing to their one address on record.
+
+    One to Many
+
+        A table of multiple entries, all associated with only one record, pointing back to that record via a 'foreign key'.
+
+        e.g. Multiple purchases belonging to one customer on different dates.
+
+    Many to Many
+
+        A 'connector' table that shows the relationships between multiple entries.
+        
+        e.g. A customer can make many orders (one to many), but also each order can  have many products that also show up in other orders from different customers (many to many).
+        
+        Other exmaples:
+        - Users and interests: One user can have many interests, and those interests can also be had by many users.
+        - Actors and movies: One movie can have many actors, and one actor can also be in many movies.
+        - Businesses and cities: One business can be spread across many cities, and one city can be home to many businesses.
+
+---
+
+3 Forms of Normalization
+
+    Normalization is how we split large tables of data into smaller tables in order to get rid of repeated data. Rather than using the same labels over and over, we can create 'foreign keys' that reference data organized in other tables.
+
+    Form 1: Each column in your table can only have 1 value.
+
+        You shouldn't have an address column that lists address, city, state, and zip all in one. Separate the info into separate columns in an address table.
+    
+    Form 2: Each non-key column (primary or foreign) must have unique values.
+
+        If you have a movie table with a categories column, you shouldn't have a category repeated more than once. Create a separate categories table and reference the categories using keys.
+
+    Form 3: Non-key columns should not be dependent on other non-key columns.
+
+        A books table with columns 'publisher_name' and 'publisher_address' should separate the publisher info into a separate table, linked to the books using keys. (Publisher address is dependent on publisher name, and neither column is a key column.)
+
+---
+
+Naming Conventions
+
+    - Make the table name plural and all lowercase (e.g. users, modules)
+    - Use "id" as the primary key (and make it auto-incremented)
+    - Name foreign keys 'tablename_id' (pointing to another table)
+    - Use 'created_at' and 'updated_at' as columns for the timestamp in every table you create
+
+---
+
+Simple Data Types
+
+    VARCHAR (Number of Characters)
+    Used for columns that store non-numeric values up to 255 characters, but only uses the space required and no more. Used for values with different character lengths like an email, first_name, or Last_name.
+
+    CHAR (Number of Characters)
+    Used for columns that store non-numeric values, but will use up all space for a set number of characters regardless of what value is added. Used for values that will always be a given number of characters (e.g. state_abbreviation).
+
+    INT
+    Used for columns that store integers. Used for unique IDs and for normal number values like a phone_number or zip_code. Two types:
+        -unsigned: positive numbers only
+        -signed: positive and negative numbers.
+
+    BIGINT
+    Used for columns that store huge numbers (e.g. a Facebook ID, since FB has over a billion users). Also uses both unsigned and signed number types.
+
+    TINYINT
+    Used for columns that store very small numbers (e.g. access control levels, such as 0 - inactive user, 1 - active user, 9 - admin).
+
+    FLOAT
+    Used for columns that store floating point numbers (e.g. item_cost).
+
+    TEXT
+    Used for columns that store a large amount of text (e.g. description, comment).
+
+    DATETIME
+    Used for columsn that store a date and time in the format YY-MM-DD hh:mm:ss.
+
+---
+
+Indexing
+
+---
+
