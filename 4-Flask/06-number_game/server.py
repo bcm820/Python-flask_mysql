@@ -10,7 +10,6 @@ def index():
     session['random'] = random.randrange(0, 101)
     return render_template("index.html")
 
-# Later, find ways to do form validation
 @app.route('/guess/', methods=['post'])
 def guess():
     session['ask'] = int(request.form['ask'])

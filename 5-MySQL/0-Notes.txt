@@ -1,6 +1,4 @@
 
-Key: Using SQL, we can distribute our data across several different tables and have them reference one another in matching records for the job at hand. This means we don't have repeat our data, allowing efficient use of storage space.
-
 Database Relationships
 
     One to One
@@ -85,7 +83,244 @@ Simple Data Types
 
 ---
 
-Indexing
+SQL
+
+    We interact with relational databases using SQL (Structured Query Language) to manage and adjust the data in any way we can imagine.
+    
+    SQL is a programming language designed to perform tasks. They can:
+        - SELECT data
+        - SELECT data WHERE some conditions are true
+        - INSERT data
+        - UPDATE data
+        - DELETE data
+        - JOIN different tables together
+    
+    Use homebrew to install MySQL.
+    
+        brew install mysql
+    
+    To start your MySQL Server as a "service" listening for connections:
+
+        brew services start mysql
+
+    To import SQL file into MySQL Workbench:
+
+        File > Open SQL Script
+
+    To reverse engineer ERD from SQL file:
+
+        Database > Reverse engineer
+
+    To export your database into a SQL file:
+
+        Server > Data export
+        Export to a self-contained file
+        Check "Include Create Schema"
+        Check the schema you want to export
+        Start Export
 
 ---
 
+SQL: SELECT
+
+    To query ALL data from a table:
+        SELECT *
+        FROM table;
+
+    To query data from a specific column:
+        SELECT column
+        FROM table;
+
+    To query data from specific columns:
+        SELECT column1, column2
+        FROM table;
+
+    To query data where a column has specific values:
+        SELECT *
+        FROM table
+        WHERE column2 IN 'input1', 'input2', 'input3'
+
+    To query data with INT conditionals:
+        SELECT *
+        FROM table
+        WHERE column =< value;
+
+    To query data where a column has a range of INT values:
+        SELECT *
+        FROM table
+        WHERE column
+        BETWEEN range1 AND range2
+
+    To query data using wildcards around letters in a column:
+        SELECT * FROM table WHERE column LIKE 'K%';
+        SELECT * FROM table WHERE column LIKE '%e';
+        SELECT * FROM table WHERE column LIKE '%p%';
+        SELECT * FROM table WHERE column LIKE 'C%ia';
+        SELECT * FROM table WHERE column LIKE '%a%b%c%';
+
+    To query data using a specific amt of char wildcard(s) in a column:
+        SELECT * FROM table WHERE column LIKE '_n%'; (2nd letter 'n')
+        SELECT * FROM table WHERE column LIKE '__b%'; (3rd letter 'b')
+
+    To query data from a column matching a specific length:
+        SELECT * FROM table WHERE column LIKE '____'; (3 chars)
+
+    To query data where two columns have matching data:
+        SELECT * FROM table WHERE column1 LIKE column2
+
+    To query data from a column with INT values in sorted order:
+        SELECT * FROM table ORDER BY column DESC;
+        SELECT * FROM table ORDER BY column ASC;
+
+    To query data from a specific column in alphabetical order:
+        SELECT * FROM table ORDER BY column;
+    
+---
+
+SQL: INSERT, UPDATE, DELETE
+
+    To insert a new record into a table in specific columns:
+        INSERT INTO table (column1, column2, column3)
+        VALUES ('string', int, function());
+
+    To update specific values in an existing record:
+        UPDATE table SET
+            column1 = 'value',
+            column2 = 'value'
+        WHERE id = 'int'
+
+        Note: If WHERE condition is not added, all records will be updated!
+
+    To delete an existing record:
+        DELETE FROM table
+        WHERE id = 'int'
+    
+        NOTE: If error SQL SAFE UPDATES comes up, run the following:
+            SET SQL_SAFE_UPDATES = 0;
+
+---
+
+SQL: BASIC FUNCTIONS
+    
+    TEXT
+
+        Example (note use of AS to create temp column name):
+        SELECT CONCAT(first_name, ' ', last_name)
+        AS full_name FROM table;
+    
+        Usage                   Returns
+        CONCAT(t1, t2)          A new string, 't1t2'
+        CONCAT_WS(' ', t1, t2)  A new string, 't1 t2'
+        LENGTH(t)               The number of characters in t
+        TRIM(t)                 t with excess space from beginning and end removed
+        UPPER(t)                t capitalized
+        LOWER(t)                t in all-lowercase format
+        REPLACE(t, x, y)        t with instances of x replaced with y
+        SUBSTRING(t, x, y)      y characters from t beginning with TEXT
+
+    NUMERIC
+
+        ABS(n)                  The absolute value of n
+        MOD(n1, n2)             n1 mod n2
+        RAND()                  Random decimal number between 0 - 1
+        ROUND(n1, n2)           n1 rounded to n2 decimal places
+        SQRT(n)                 The square root of n1
+
+    DATE
+
+        DATE(dt)                The date value of dt
+        HOUR(dt)                The hour value of dt
+        SECOND(dt)              The second value of dt
+        DAYNAME(dt)             The name of the day for dt
+        MONTHNAME(dt)           The name of the month of dt
+        MONTH(dt)               The numerical month value of dt
+        YEAR(dt)                The year value of dt
+        CURDATE()               The current date
+        CURTIME()               The current time
+        NOW()                   The current date and time
+        TIME_FORMAT(dt, format) The time in the specified format
+        DATE_FORMAT(dt, format) The date in the specified format
+
+        More: https://www.w3schools.com/sql/func_mysql_date_format.asp
+
+---
+
+SQL: JOINS
+    
+    Join multiple columns from two related tables in a ONE TO ONE/MANY relationship
+    where primary key in a table matches corresponding foreign key in related table:
+        SELECT table_a.column1, table_b.column2
+        FROM table_a
+        JOIN table_b
+        ON table_b.id = table_a.table_b_id
+           (primary)     (foreign)
+
+    Join multiple columns from two related tables in a MANY TO MANY relationship
+    where each table's primary keys match corresponding foreign keys on connecting table:
+        SELECT table_a.column1, table_b.column2
+        FROM table_a
+        JOIN table_c ON table_a.id = table_c.table_a_id
+        JOIN table_b ON table_b.id = table_c.table_b_id
+             (table 3 = connecting table)
+
+---
+
+SQL: LEFT JOINS
+
+    In cases where some of a table's records do not have a matching foreign key ID value from a related table (e.g. a customer that has an account but has not yet placed any orders), how can you still list those records? You need to use a LEFT JOIN, which lists records by primary ID.
+
+    Left join multiple columns from two related tables in a ONE TO ONE/MANY relationship
+    where primary key in a table matches corresponding foreign key in related table:
+        SELECT table_a.column1, table_b.column2
+        FROM table_a
+        LEFT JOIN table_b
+        ON table_a.id = table_b.table_a_id     <- Note order switched
+           (primary)     (foreign)
+
+    Left join multiple columns from two related tables in a MANY TO MANY relationship
+    where each table's primary keys match corresponding foreign keys on connecting table:
+        SELECT table_a.column1, table_b.column2
+        FROM table_a
+        LEFT JOIN table_c ON table_a.id = table_c.table_a_id
+        LEFT JOIN table_b ON table_c.table_b_id = table_b.id    <- Note order switched
+             (table 3 = connecting table)
+
+---
+
+SQL: SELF-JOINS
+
+    What do you do if you have a table with records that are related to one another in a MANY TO MANY relationship (e.g. user to user)? Technically you could duplicate the whole table and create the relationship between the two. But that would be redundant data. So instead, you use a SELF-JOIN to create the MANY TO MANY relationship using the same table twice.
+
+    Example of a self-join of a table of related records in a MANY TO MANY relationship
+    (Twitter users followed & followers):
+        SELECT users.username AS followed, users2.username AS follower
+        FROM users                              ^- Notice 'duplicate', defined below...
+        LEFT JOIN follows  <- 'connecting' table
+        ON users.id = follows.followed_id
+        LEFT JOIN users AS users2   <- The 'duplicate' table defined
+        ON users2.id = follows.follower_id
+
+            NOTE: 'AS' is required to allow joining the same table twice via a 2nd reference variable
+
+---
+
+SQL: NESTED QUERIES
+
+    How do you produce a query from the results of another query? Create a nested query.
+
+    Example: Select all records where a specific column value is larger than that of a particular record-
+        SELECT * FROM table WHERE column1 >
+            (SELECT column1 FROM table WHERE name = 'value')
+
+___
+    
+SQL: GROUPING FUNCTIONS
+
+    AVG(column)             The average of the value in a column
+    COUNT(column)           The number of values in a column
+    GROUP_CONCAT(column)    The concatenation of a column's values
+    MAX(column)             The largest value in a column
+    MIN(column)             The smallest value in a column
+    SUM(column)             The sum of all the values in a column
+
+---
