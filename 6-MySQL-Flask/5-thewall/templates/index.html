@@ -1,0 +1,49 @@
+<html>
+<head>
+    <title>The Wall</title>
+    <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css')}}>
+    <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+</head>
+
+<body>
+<form action=/login/ method=post>
+<div id=container1>
+
+    <div id=title1>Login</div>
+
+    <div class=text_inputs>
+        Email:<br>
+        <input type=text name=email value={{session['temp']}}><br>
+        {% with fields = get_flashed_messages(category_filter=["email"]) %}
+        {% if fields %}
+            {%- for msg in fields %}
+                <span class=errors>{{ msg }}</span>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class=text_inputs>
+        Password:<br>
+        <input type=password name=password><br>
+        {% with fields = get_flashed_messages(category_filter=["password"]) %}
+        {% if fields %}
+            {%- for msg in fields %}
+                <span class=errors>{{ msg }}</span>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div id=submit1>
+        <input type=submit value=Login><br>
+    </div>
+
+    <div id=footer>
+        <a href=/join/>Join the Wall</a>
+    </div>
+
+</div>
+</form>
+</body>
+</html>

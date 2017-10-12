@@ -1,0 +1,131 @@
+*{
+    vertical-align: baseline;
+	font-weight: inherit;
+	font-family: inherit;
+	font-style: inherit;
+	font-size: 100%;
+	border: 0 none;
+	outline: 0;
+	padding: 0;
+    margin: 0;
+/*     outline: .1px solid red; */
+    }
+
+body{
+    font-family: Helvetica, sans-serif;
+    font-size: 9pt;
+    color: black;
+}
+
+a, a:visited{
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+h4{
+    font-size: 10.5pt;
+    margin-bottom: 8px;
+}
+
+p{
+    margin-left: 20px;
+}
+
+input{
+    border: 1px solid black;
+    box-shadow: 1px 1px 1px black;
+    padding: 5px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    font-size: 9pt;
+    width: 100%;
+}
+
+textarea{
+    border: 1px solid black;
+    box-shadow: 1px 1px 1px black;
+    padding: 5px;
+    margin-top: 3px;
+    margin-bottom: 5px;
+    font-size: 9pt;
+    width: 100%;
+    height: 50px;
+    resize: none;
+}
+
+
+
+/* Login & Join */
+
+#container1{
+    width: 200px;
+    margin: 10% auto 0;
+    border-radius: 10px;
+}
+
+#title1{
+    font-size: 18pt;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+#submit1{ padding-left: 140px }
+
+#footer{
+    text-align: center;
+    font-size: 8pt;
+    padding-top: 20px;
+}
+
+.text_inputs{
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 55px;
+}
+
+.errors{
+    padding-left: 5px;
+    font-size: 7pt;
+    color: red;
+}
+
+
+/* Wall */
+
+#header{
+    display: grid;
+    height: 30px;
+    background-color: black;
+    color: white;
+    padding: 15px;
+    grid-template-columns: 60% 1fr 70px;
+}
+
+    #title2{ font-size: 24pt }
+
+    #welcome{
+        font-size: 14px;
+        font-weight: lighter;
+        text-align: right;
+        padding-top: 10px;
+        padding-right: 15px;
+    }
+
+#container2{
+    width: 60%;
+    margin: 30px auto 0;
+}
+
+#post_message{ font-size: 12pt }
+    #submit2{ padding-left: 80% }
+
+#message{ margin-top: 25px }
+
+
+
+
+
+
+
+

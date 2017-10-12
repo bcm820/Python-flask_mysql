@@ -1,0 +1,39 @@
+<html>
+<head>
+    <title>CodingDojo Wall</title>
+    <!-- <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}> -->
+    <link rel=stylesheet type=text/css href=../static/style.css>
+</head>
+
+<body>
+
+<div id=header>
+    <div id=title2>CodingDojo Wall</div>
+    <div id=welcome>Welcome, {{user['first_name']}}!</div>
+    <div>
+        <form action=/wall/logout/ method=POST>
+            <input type=submit value='Logout'>
+        </form>
+    </div>
+</div>
+
+<div id=container2>
+
+    <div id=post_message>
+        <form action=/wall/logout/ method=POST>
+        Post a Message<br>
+        <textarea name=message></textarea>
+        <div id=submit2><input type=submit value='Post a message'></div>
+        </form>
+    </div>
+
+    {% for message in messages: %}
+    <div id=message>
+        <h4>{{message['first_name']}} {{message['last_name']}} - {{message['created_at']}}</h4>
+        <p>{{message['message']}}</p>
+    </div>
+    {% endfor %}
+
+</div>
+</body>
+</html>
