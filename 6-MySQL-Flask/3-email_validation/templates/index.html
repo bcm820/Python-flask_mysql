@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <title>Email Check</title>
+        <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}>
+        <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+    </head>
+    <body>
+        <form action=/validate/ method=post>
+
+        <div id=container>
+            <div id=title>Is your email listed?</div>
+            <div id=email>
+                <h2>Enter Your Email Address</h2>
+                <input type=text name=email>
+            </div>
+            <div>
+                <input type=submit value="Check!">
+            </div>
+        </div>
+
+        {% with invalid = get_flashed_messages(category_filter=["invalid"]) %}
+        {% if invalid %}
+            {%- for message in invalid %}
+            <div id=invalid>{{ message }}</div>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+        
+        {% with yes = get_flashed_messages(category_filter=["yes"]) %}
+        {% if yes %}
+            {%- for message in yes %}
+            <div id=yes>{{ message }}<br><a href="/list/">View the List</a></div>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+
+        {% with no = get_flashed_messages(category_filter=["no"]) %}
+        {% if no %}
+            {%- for message in no %}
+            <div id=no>{{ message }}<br><a href="/list/">View the List</a></div>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+
+        </form>
+    </body>
+</html>

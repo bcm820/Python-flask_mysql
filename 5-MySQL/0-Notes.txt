@@ -135,10 +135,10 @@ SQL: SELECT
         SELECT column1, column2
         FROM table;
 
-    To query data where a column has specific values:
+    To query data by selecting specific rows where data is located:
         SELECT *
         FROM table
-        WHERE column2 IN 'input1', 'input2', 'input3'
+        WHERE column2 IN ('input1', 'input2', 'input3');
 
     To query data with INT conditionals:
         SELECT *
@@ -324,3 +324,4 @@ SQL: GROUPING FUNCTIONS
     SUM(column)             The sum of all the values in a column
 
 ---
+

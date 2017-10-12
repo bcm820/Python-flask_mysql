@@ -1,0 +1,23 @@
+<html>
+        <head>
+            <title>Your Info</title>
+            <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}>
+            <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+        </head>
+        <body>
+            <div id=container>
+                <div id=title>Your Info</div>
+                <div>
+                    ID: {{ user['id'] }}<br>
+                    First Name: {{ user['first_name'] }}<br>
+                    Last Name: {{ user['last_name'] }}<br>
+                    Email: {{ user['email'] }}<br>
+                    Created: {{ user['created_at'] }}<br>
+                    Updated: {{ user['updated_at'] }}<br><br>
+                    <form action=/logout/ method=POST>
+                        <input type=submit value=Logout>
+                    </form>
+                </div>
+            </div>
+        </body>
+</html>

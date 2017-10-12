@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Registration</title>
+        <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}>
+        <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+    </head>
+    <body>
+
+    <div id=flashes>
+        <div>
+            {% with fields = get_flashed_messages(category_filter=["first"]) %}
+            {% if fields %}
+                {%- for msg in fields %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div>
+            {% with fields = get_flashed_messages(category_filter=["last"]) %}
+            {% if fields %}
+                {%- for msg in fields %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div>
+            {% with fields = get_flashed_messages(category_filter=["email"]) %}
+            {% if fields %}
+                {%- for msg in fields %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div>
+            {% with fields = get_flashed_messages(category_filter=["password"]) %}
+            {% if fields %}
+                {%- for msg in fields %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div>
+            {% with fields = get_flashed_messages(category_filter=["confirm"]) %}
+            {% if fields %}
+                {%- for msg in fields %}
+                <p>{{ msg }}</p>
+                {% endfor -%}
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+
+    <form action=/registration/add/ method=post>
+    <div id=container>
+        <div id=title>Registration</div>
+        <div id=first>
+            First Name:<br>
+            <input type=text name=first_name value="{{ session['first_name']}}">
+        </div>
+        <div id=last>
+            Last Name:<br>
+            <input type=text name=last_name value="{{ session['last_name']}}">
+        </div>
+        <div id=email>
+            Email:<br>
+            <input type=text name=email value="{{ session['email']}}">
+        </div>
+        <div id=password>
+            Password:<br>
+            <input type="password" name="password" value="{{ session['password']}}">
+        </div>
+        <div id=password>
+            Confirm Password:<br>
+            <input type="password" name="confirm" value="{{ session['confirm']}}">
+        </div>
+        <div id=submit>
+            <input type="submit" value="Submit">
+        </div>
+    </div>
+    </form>
+    
+    </body>
+</html>

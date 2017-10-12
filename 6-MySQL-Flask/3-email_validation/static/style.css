@@ -1,0 +1,125 @@
+*{
+    /* outline: .1px solid red; */
+    }
+
+body{
+    font-family: Helvetica, sans-serif;
+    font-size: 9pt; 
+    color: black;
+    background: radial-gradient(circle, slategrey, black);
+    background-size: 1500px 1500px;
+    background-position: center;
+}
+
+div{
+    padding: 5px 15px;
+    font-size: 8pt;
+}
+
+table{
+    width: 100%;
+    font-size: 9pt;
+}
+
+tr{
+    height: 20px;
+}
+
+a, a:visited{
+    font-weight: bold;
+    color: black;
+
+}
+
+h2{
+    margin-top: 2px;
+    margin-bottom: 5px;
+    font-size: 12pt;
+    font-weight: lighter;
+    text-align: center;
+}
+
+#container{
+    background-color: silver;
+    border: 1px solid black;
+    box-shadow: 2px 1px 1px black;
+    width: 350px;
+    height: 175px;
+    margin: 250px auto 20px;
+    border-radius: 10px;
+}
+
+#container2{
+    background-color: silver;
+    border: 1px solid black;
+    box-shadow: 2px 1px 1px black;
+    width: 350px;
+    margin: 250px auto 20px;
+    border-radius: 10px;
+}
+
+form{
+    width: 350px;
+    height: 225px;
+    margin: auto;
+}
+
+    #title{
+        padding-top: 20px;
+        font-size: 18pt;
+        text-align: center;
+        height: 30px;
+    }
+
+#yes{
+    margin-left: 75px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    border: 1px solid black;
+    box-shadow: 2px 1px 1px black;
+    background-color: lightgreen;
+    font-size: 12pt;
+}
+
+#no{
+    margin-left: 75px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    border: 1px solid black;
+    box-shadow: 2px 1px 1px black;
+    background-color: salmon;
+    font-size: 12pt;
+}
+
+#invalid{
+    margin-left: 75px;
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    border: 1px solid black;
+    box-shadow: 2px 1px 1px black;
+    background-color: red;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+input{
+    border: 1px solid black;
+    width: 100%;
+    padding: 5px;
+    box-shadow: 2px 1px 1px black;
+    font-size: 12pt;
+    border-radius: 10px;
+    text-align: center;
+}
+
+input[type=submit]{
+    width: 70px;
+    height: 30px;
+    display: block;
+    margin: 2px auto;
+    font-size: 10pt;
+    background-color:lightskyblue
+}

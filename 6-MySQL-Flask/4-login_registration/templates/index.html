@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>Login</title>
+        <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}>
+        <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+    </head>
+    <body>
+
+<div id=flashes2>
+    <div>
+        {% with fields = get_flashed_messages(category_filter=["email"]) %}
+        {% if fields %}
+            {%- for msg in fields %}
+            <p>{{ msg }}</p>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div>
+        {% with fields = get_flashed_messages(category_filter=["password"]) %}
+        {% if fields %}
+            {%- for msg in fields %}
+            <p>{{ msg }}</p>
+            {% endfor -%}
+        {% endif %}
+        {% endwith %}
+    </div>
+</div>
+
+        <form action=/login/ method=post>
+        <div id=container>
+            <div id=title>Login</div>
+            <div id=email>
+                Email:<br>
+                <input type=text name=email value="{{ session['email']}}">
+            </div>
+            <div id=password>
+                Password:<br>
+                <input type="password" name="password" value="{{ session['password']}}">
+            </div>
+            <div id=submit>
+                <input type="submit" value="Submit">
+            </div>
+            <div>
+                <a href="/registration/">Register a new account</a>
+            </div>
+        </div>
+        </form>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>Our Email List</title>
+        <link rel=stylesheet type=text/css href={{ url_for('static', filename='style.css') }}>
+        <!-- <link rel=stylesheet type=text/css href=../static/style.css> -->
+    </head>
+    <body>
+        <div id=container2>
+            <div id=title>Our Email List</div>
+            <div>
+                <table id=emails>
+                    {% for record in emails: %}
+                    <tr>
+                        <td>{{ record['email'] }}</td>
+                        <td>{{ record['created_at'] }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr><td></td><td></td></tr>
+                    <tr>
+                        <td align=center colspan=2><a href="/">Return to Index</a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
