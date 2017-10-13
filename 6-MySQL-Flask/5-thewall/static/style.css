@@ -23,18 +23,24 @@ a, a:visited{
     text-decoration: none;
 }
 
-h4{
-    font-size: 10.5pt;
-    margin-bottom: 8px;
+h3{
+    font-size: 11pt;
+    font-weight: bold;
 }
+
+h4{ margin-bottom: 8px }
+h5{ margin-left: 20px; font-weight: bold }
 
 p{
     margin-left: 20px;
+    text-align: justify;
+    line-height: 11pt;
 }
 
 input{
     border: 1px solid black;
     box-shadow: 1px 1px 1px black;
+    background-color: azure;
     padding: 5px;
     margin-top: 3px;
     margin-bottom: 5px;
@@ -42,9 +48,12 @@ input{
     width: 100%;
 }
 
+input[type=submit]{ background-color: lightskyblue }
+
 textarea{
     border: 1px solid black;
     box-shadow: 1px 1px 1px black;
+    background-color: azure;
     padding: 5px;
     margin-top: 3px;
     margin-bottom: 5px;
@@ -91,7 +100,7 @@ textarea{
 }
 
 
-/* Wall */
+/* Wall: Header */
 
 #header{
     display: grid;
@@ -112,17 +121,40 @@ textarea{
         padding-right: 15px;
     }
 
-#container2{
-    width: 60%;
-    margin: 30px auto 0;
-}
-
-#post_message{ font-size: 12pt }
-    #submit2{ padding-left: 80% }
-
-#message{ margin-top: 25px }
+    .lightoutline{ border: 1px solid white }
 
 
+/* Wall: Post Message */
+
+#container2{ width: 600px; margin: 30px auto 0 }
+
+    #post_message{ font-size: 12pt }
+        .submit2{ padding-left: 80% }
+
+
+/* Wall: Messages */
+
+#message{ margin-top: 35px }
+
+    .submit3{
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+    }
+
+
+/* Wall: Comments */
+
+#comment{ margin: 8px 20px 0px 20px }
+
+    .bold { font-weight: bold }
+
+    .date{
+        font-size: 8pt;
+        font-style: italic;
+    }
+
+#post_comment{ margin: 15px 50px 0px 40px }
 
 
 

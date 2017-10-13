@@ -9,6 +9,7 @@ mysql = MySQLConnector(app,'wall')
 email_regex = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
 
+
 ### Join GET & POST
 @app.route('/join/')
 def join():
@@ -20,11 +21,11 @@ def new():
 
     # first - no numbers, not blank
     if len(request.form['first_name']) < 2:
-        flash(u'Error: Must be at least 2 characters.', 'first')
+        flash(u'Must be at least 2 characters.', 'first')
         session['flash_count'] += 1 # Log error in counter
         session['first_name'] = ""   # Clear invalid entry
     elif not request.form['first_name'].isalpha():
-        flash(u"Error: Only letters are allowed.", 'first')
+        flash(u"Only letters are allowed.", 'first')
         session['flash_count'] += 1
         session['first_name'] = ""
     else:
@@ -32,11 +33,11 @@ def new():
 
     # last - no numbers, not blank
     if len(request.form['last_name']) < 2:
-        flash(u'Error: Must be at least 2 characters.', 'last')
+        flash(u'Must be at least 2 characters.', 'last')
         session['flash_count'] += 1
         session['last_name'] = ""
     elif not request.form['last_name'].isalpha():
-        flash(u"Error: Only letters are allowed.", 'last')
+        flash(u"Only letters are allowed.", 'last')
         session['flash_count'] += 1
         session['last_name'] = ""
     else:
@@ -44,11 +45,11 @@ def new():
 
     # email - format (regex), not blank
     if len(request.form['email']) < 1:
-        flash(u'Error: No email address provided.', 'email')
+        flash(u'No email address provided.', 'email')
         session['flash_count'] += 1
         session['email'] = ""
     elif not email_regex.match(request.form['email']):
-        flash(u'Error: Invalid address format.', 'email')
+        flash(u'Invalid address format.', 'email')
         session['flash_count'] += 1
         session['email'] = ""
     else:
@@ -56,7 +57,7 @@ def new():
 
     # password - not blank, more than 8 chars
     if len(request.form['password']) < 8:
-        flash(u'Error: Password length must be at least 8 characters.', 'password')
+        flash(u'Must be 8 or more characters.', 'password')
         session['flash_count'] += 1
         session['password'] = ""
     else:
@@ -64,7 +65,7 @@ def new():
 
     # confirm - match password
     if not request.form['confirm'] == request.form['password']:
-        flash(u'Error: Passwords do not match.', 'confirm')
+        flash(u'Passwords do not match.', 'confirm')
         session['flash_count'] += 1
         session['password'] = ""
         session['confirm'] = ""
@@ -101,6 +102,7 @@ def new():
 ###
 
 
+
 ### Login GET & POST
 @app.route('/')
 def root():
@@ -111,7 +113,7 @@ def login():
 
     # Error if the email format is invalid
     if not email_regex.match(request.form['email']):
-        flash(u'Error: Invalid address format.', 'email')
+        flash(u'Invalid address format.', 'email')
         return redirect('/')
     else:
         session['temp'] = request.form['email'] # temp email store
@@ -128,16 +130,17 @@ def login():
             session['temp'] = "" #empty temp email store
             return redirect('/wall/')
         else:
-            flash(u'Error: Password incorrect.', 'password')
+            flash(u'Password incorrect.', 'password')
             return redirect('/')
     else:
-        flash(u'Error: Account not found.', 'email')
+        flash(u'Account not found.', 'email')
         return redirect('/')
 
 ###
 
 
-### Wall GET & POST
+
+### Wall GET
 @app.route('/wall/')
 def wall():
     
@@ -147,35 +150,58 @@ def wall():
     user = mysql.query_db(query_user, user_id)
 
     # Query for messages
-    query_messages = "SELECT users.first_name, users.last_name, messages.message, messages.created_at FROM users JOIN messages ON messages.user_id = users.id GROUP BY messages.id ORDER BY messages.id DESC"
+    query_messages = "SELECT users.id, messages.user_id, users.first_name, users.last_name, messages.id, messages.message, messages.created_at FROM users JOIN messages ON messages.user_id = users.id GROUP BY messages.id ORDER BY messages.id DESC"
     messages = mysql.query_db(query_messages)
-    
-    return render_template("wall.html", user=user[0], messages=messages)
+
+    # Convert message time format
+    for i in range (0,len(messages)):
+        m_time = messages[i]["created_at"]
+        messages[i]["created_at"] = m_time.strftime('%A %B %d, %Y at %-I:%M %p')
+
+    # Query for comments
+    query_comments = "SELECT users.first_name, users.last_name, comments.comment, comments.created_at, comments.message_id FROM users JOIN messages ON messages.user_id = users.id JOIN comments ON comments.message_id = messages.id GROUP BY comments.id ORDER BY comments.id ASC"
+    comments = mysql.query_db(query_comments)
+
+    # Convert comments time format
+    for i in range (0,len(comments)):
+        c_time = comments[i]["created_at"]
+        comments[i]["created_at"] = c_time.strftime('%c')
+        
+    return render_template("wall.html", user=user[0], messages=messages, comments=comments)
 
 ###
 
 
 
-
-
-
-
-@app.route('/wall/message/', methods=['POST'])
-def message():
-    return redirect('/wall/')
-###
-
-@app.route('/wall/comment/', methods=['POST'])
-def comment():
-    return redirect('/wall/')
-###
-
-
-
-
+### Wall POST
 @app.route('/wall/logout/', methods=['POST'])
 def logout():
     session['user'] = ""
     return redirect('/')
+
+@app.route('/wall/message/', methods=['POST'])
+def message():
+    query = "INSERT INTO messages (user_id, message, created_at, updated_at) VALUES (:user_id, :message, NOW(), NOW())"
+    data = {
+        'user_id': session['user'],
+        'message': request.form['message'],
+    }
+    mysql.query_db(query, data)
+    return redirect('/wall/')
+
+@app.route('/wall/comment/', methods=['POST'])
+def comment():
+    query = "INSERT INTO comments (user_id, comment, message_id, created_at, updated_at) VALUES (:user_id, :comment, :message_id, NOW(), NOW())"
+    data = {
+        'user_id': session['user'],
+        'comment': request.form['comment'],
+        'message_id': request.form['message_id']
+    }
+    mysql.query_db(query, data)
+    return redirect('/wall/')
+###
+
+
+
 
 app.run(debug=True)

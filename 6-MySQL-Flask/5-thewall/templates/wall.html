@@ -12,7 +12,7 @@
     <div id=welcome>Welcome, {{user['first_name']}}!</div>
     <div>
         <form action=/wall/logout/ method=POST>
-            <input type=submit value='Logout'>
+            <input type=submit value='Logout' class=lightoutline>
         </form>
     </div>
 </div>
@@ -20,17 +20,38 @@
 <div id=container2>
 
     <div id=post_message>
-        <form action=/wall/logout/ method=POST>
+        <form action=/wall/message/ method=POST>
         Post a Message<br>
         <textarea name=message></textarea>
-        <div id=submit2><input type=submit value='Post a message'></div>
+        <div class=submit2><input type=submit value='Add message'></div>
         </form>
     </div>
 
     {% for message in messages: %}
     <div id=message>
-        <h4>{{message['first_name']}} {{message['last_name']}} - {{message['created_at']}}</h4>
+        <h3>{{message['first_name']}} {{message['last_name']}}</h3>
+        <h4 class=date>{{message['created_at']}}</h4>
         <p>{{message['message']}}</p>
+    </div>
+
+        {% for comment in comments: %}
+            {% if message['id'] == comment['message_id'] %}
+                <div id=comment>
+                    <p>
+                        <span class=bold>{{comment['first_name']}} {{comment['last_name']}}</span>
+                        &nbsp;&nbsp;{{comment['comment']}}&nbsp;&nbsp;
+                        <span class=date>{{comment['created_at']}}</span>
+                    </p>
+                </div>
+            {% endif %}
+        {% endfor %}
+
+    <div id=post_comment>
+        <form action=/wall/comment/ method=POST>
+        <textarea name=comment></textarea>
+        <input type=hidden name=message_id value="{{message['id']}}">
+        <div class=submit2><input type=submit value='Comment'></div>
+        </form>
     </div>
     {% endfor %}
 
