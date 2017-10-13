@@ -1,0 +1,28 @@
+<html>
+<head>
+  <title>Users</title>
+</head>
+<body>
+
+<h1>EDIT (UPDATE QUERY)</h1>
+
+<hr>
+<h3>Nav</h3>
+<p><a href="/users/">Index</a></p>
+<p><a href="/users/{{ user['id'] }}/">Show</a></p>
+<hr>
+<form action="/users/{{ user['id'] }}/update/" method=POST>
+    <label for=name>Name:<input type=text name=name></label>
+    <label for=email>Email:<input type=text name=email></label>
+    <input type=submit value="Edit">
+</form>
+<hr>
+
+<p> ID: {{ user['id'] }} </p>
+<p> Name: {{ user['name'] }} </p>
+<p> Email: {{ user['email'] }} </p>
+<p> Created At: {{ user['created_at'] }} </p>
+<p> Updated At: {{ user['updated_at'] }} </p>
+
+</body>
+</html>

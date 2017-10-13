@@ -11,7 +11,7 @@ def root():
 @app.route('/result/', methods=['POST'])
 def form():
 
-    if len(request.form['name']) < 1:
+    if len(r..equest.form['name']) < 1:
         flash("Name cannot be empty!")
         return redirect('/')
 

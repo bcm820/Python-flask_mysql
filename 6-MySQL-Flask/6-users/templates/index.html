@@ -1,0 +1,32 @@
+<html>
+<head>
+  <title>Users</title>
+</head>
+<body>
+    
+<h1>INDEX (SELECT QUERY)</h1>
+
+<hr>
+<h3>Nav</h3>
+<p><a href=/users/new>Create New</a></p>
+<hr>
+
+<table>
+{% for user in users: %}
+<tr>
+  <td> {{ user['id'] }} </td>
+  <td> {{ user['name'] }} </td>
+  <td> {{ user['email'] }} </td>
+  <td> Created {{ user['created_at'] }} </td>
+  <td> Updated {{ user['updated_at'] }} </td>
+  <td><a href="/users/{{ user['id'] }}/">Show</a></td>
+  <td><a href="/users/{{ user['id'] }}/edit/">Edit</a></td>
+  <td><form action="/users/{{ user['id'] }}/destroy/" method=post>
+    <input type=submit value=Delete>
+  </form></td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
